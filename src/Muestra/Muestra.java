@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Set;
 
 import Aplicacion.Ubicacion;
-import TipoDeMuestra.TipoDeMuestra;
 import Usuarios.Usuario;
 import NivelesDeVerificacion.NivelDeVerificacion;
 
@@ -16,18 +15,13 @@ public class Muestra {
 	private Date fechaDeCreacion;
 	
 	//Constructores
-	public Muestra(Verificacion verificacion,String unaFotografia, Ubicacion unaUbicacion, Date fechaDeCreacion) {
+	public Muestra(Verificacion verificacion,String unaFotografia, Ubicacion unaUbicacion, Date unaFechaDeCreacion) {
 		this.verificador = new VerificadorDeMuestra(verificacion);
 		this.aliasDePrimerVerificador = verificacion.getAliasDeVerificador();
 		this.fotografia = unaFotografia;
 		this.ubicacion = unaUbicacion;
-		this.fechaDeCreacion = fechaDeCreacion;
+		this.fechaDeCreacion = unaFechaDeCreacion;
 	}
-	
-	public Muestra(String string, Verificacion verificacion1) {
-		// TODO Auto-generated constructor stub
-	}
-
 	//Geters
 	public NivelDeVerificacion getNivelDeVerificion() {
 		return this.verificador.getNivelDeVerificacion();
@@ -43,8 +37,8 @@ public class Muestra {
 	public boolean esDeUsuario(String alias) {
 		return this.aliasDePrimerVerificador == alias;
 	}
-	public boolean esMuestraVerificablePara(String alias, Verificacion verificacion) {
-		return this.verificador.puedeVerificar(alias, verificacion);
+	public boolean esMuestraVerificablePara(String alias) {
+		return this.verificador.puedeVerificar(alias);
 	}
 	public Boolean tieneVerificacionDe(String alias) {
 		return this.verificador.tieneVerificacionDe(alias);

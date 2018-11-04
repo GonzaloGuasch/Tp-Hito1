@@ -28,7 +28,7 @@ public class VerificadorDeMuestra {
 	
 	//Constructor
 	public VerificadorDeMuestra(Verificacion nuevaVerificacion){
-		this.nivelDeVerificacionDeMuestra = nuevaVerificacion.getNivelDeVerificacion();
+		this.nivelDeVerificacionDeMuestra = nuevaVerificacion.getNivelDeVerificacionInicial();
 		this.verificaciones.add(nuevaVerificacion);
 		
 		NivelDeVerificacion alta   = new Alta();
@@ -63,12 +63,12 @@ public class VerificadorDeMuestra {
 	
 	//Booleanos
 	
-	public boolean puedeVerificar(String usuario, Verificacion nuevaVerificacion) {
-		boolean res = false;
-		for(Verificacion v :verificaciones) {
-			res = res || v.noEsVerificacionDe(usuario);
+	public boolean puedeVerificar(String usuario) {
+		boolean respuesta = false;
+		for(Verificacion unaVerificacion :verificaciones) {
+			respuesta = respuesta || unaVerificacion.noEsVerificacionDe(usuario);
 		}
-		return res;
+		return respuesta;
 	}
 	public Boolean tieneVerificacionDe(String alias) {
 		return verificaciones.stream().filter(verificacion -> verificacion.getAliasDeVerificador() == alias)

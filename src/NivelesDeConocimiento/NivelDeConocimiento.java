@@ -12,7 +12,7 @@ public abstract class NivelDeConocimiento {
 	public Integer getRanking() {
 		return this.rankingDeConocimiento;
 	}
-	public NivelDeVerificacion getNivelDeVerificacion() {
+	public NivelDeVerificacion getNivelDeVerificacionInicial() {
 		return this.nivelDeVerificacion;
 	}
 	public abstract void resolverEstado(Usuario usuario, AplicacionVinchuca app);

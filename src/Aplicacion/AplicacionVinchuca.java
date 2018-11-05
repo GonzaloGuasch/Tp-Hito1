@@ -11,7 +11,7 @@ import Usuarios.Usuario;
 public class AplicacionVinchuca {
 	private Set<Muestra> muestras = new HashSet<Muestra>();
 	private Set<Usuario> usuarios = new HashSet<Usuario>();
-	private CalculadorDeDistancias calculadoraDistancias= new CalculadorDeDistancias();
+	private CalculadoraDeDistancias calculadoraDistancias= new CalculadoraDeDistancias();
 	private Date fechaDelDia;
 	
 	public AplicacionVinchuca(Date fechaDelDia){

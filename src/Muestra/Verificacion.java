@@ -18,8 +18,8 @@ public class Verificacion {
 		public String getObservacionDeVerificador() {
 			return this.observacionDeUsuario;
 		}
-		public NivelDeVerificacion getNivelDeVerificacion() {
-			return this.usuarioVerificador.getNivelDeVerificacion();
+		public NivelDeVerificacion getNivelDeVerificacionInicial() {
+			return this.usuarioVerificador.getNivelDeVerificacionInicial();
 		}
 		public boolean noEsVerificacionDe(String alias) {
 			return usuarioVerificador.getAlias() != alias;

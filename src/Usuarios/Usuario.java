@@ -25,12 +25,12 @@ public abstract class Usuario {
         return app.muestrasEnviadasEsteMesDe(this);
     }
 	
-	//get alias del usuario y nivel de verificacion
+	//get alias del usuario y nivel de verificacion 
 	public String getAlias() {
 		return this.identificacion;
 	}
-	public NivelDeVerificacion getNivelDeVerificacion() {
-		return nivelDeConocimiento.getNivelDeVerificacion();
+	public NivelDeVerificacion getNivelDeVerificacionInicial() {
+		return nivelDeConocimiento.getNivelDeVerificacionInicial();
 	}
 	
 	//Acciones del usuario
@@ -51,7 +51,7 @@ public abstract class Usuario {
 	//Verificacion de muestra
 		
 	public void verificarMuestra(Verificacion verificacion, Muestra nuevaMuestra, AplicacionVinchuca app){
-		if(nuevaMuestra.esMuestraVerificablePara(this.getAlias(), verificacion)){
+		if(nuevaMuestra.esMuestraVerificablePara(this.getAlias())){
 			nuevaMuestra.agregarVerificacion(verificacion); 
 			this.enviarMuestra(nuevaMuestra, app);
 		}

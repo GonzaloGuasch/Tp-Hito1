@@ -20,7 +20,7 @@ public class Media extends NivelDeVerificacion {
 	private boolean hayDosNovatos(Muestra muestra) {
 		List<Usuario> usuariosExpertos = new ArrayList<Usuario>();
 		for(Usuario usuario : muestra.getUsuarios()) {
-			if(usuario.esNovato()) {
+			if(usuario.getNivelDeConocimiento().valor() < 1) {
 				usuariosExpertos.add(usuario);
 			}
 		}

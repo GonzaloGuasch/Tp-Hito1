@@ -7,9 +7,9 @@ public class Vinchuca extends TipoDeMuestra {
 	@Override
 	public boolean hacerseCargo(List<Verificacion> verificaciones) {
 		
-		return this.todosVerificanron("Vinchuca", verificaciones) || (
+		return this.todosVerificaron("Vinchuca", verificaciones) || (
 				   this.usuarioDeMayorNivelObservo("Vinchuca", verificaciones) &&
-				   this.noHayDosUsuariosDeAltoNivelQueDiscrepan("Vinchuca" , verificaciones));
+				   this.noHayDosUsuariosDeAltoNivelQueDiscrepan(verificaciones));
 	}
 
 	@Override

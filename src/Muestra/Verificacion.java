@@ -1,16 +1,20 @@
 package Muestra;
 
 import Usuarios.Usuario;
+
+import java.time.LocalDate;
 import NivelesDeVerificacion.NivelDeVerificacion;
 
 public class Verificacion {
 	
 		private Usuario usuarioVerificador;
 		private String observacionDeUsuario;
+		private LocalDate fechaDeCreacion;
 		
-		public Verificacion(Usuario usuario, String observacion) {
+		public Verificacion(Usuario usuario, String observacion, LocalDate fechaDeCreacion) {
 			this.usuarioVerificador = usuario;
 			this.observacionDeUsuario = observacion;
+			this.fechaDeCreacion = fechaDeCreacion;
 		}
 		public String getAliasDeVerificador() {
 			return this.usuarioVerificador.getAlias();
@@ -26,5 +30,8 @@ public class Verificacion {
 		}
 		public Usuario getVerificador() {
 			return this.usuarioVerificador;
+		}
+		public LocalDate getFechaDeCreacion() {
+			return fechaDeCreacion;
 		}
 }

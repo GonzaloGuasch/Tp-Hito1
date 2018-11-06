@@ -30,7 +30,7 @@ public class Alta extends NivelDeVerificacion {
 	private boolean hayDosUsuariosExpertos(Muestra muestra) {
 		List<Usuario> usuariosExpertos = new ArrayList<Usuario>();
 		for(Usuario usuario : muestra.getUsuarios()) {
-			if(usuario.esExperto()) {
+			if(usuario.getNivelDeConocimiento().valor() >= 1) {
 				usuariosExpertos.add(usuario);
 			}
 		}

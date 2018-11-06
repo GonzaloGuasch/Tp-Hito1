@@ -1,5 +1,6 @@
 package Muestra;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,15 +13,17 @@ public class Muestra {
 	private Ubicacion ubicacion;
 	private String fotografia;
 	private String aliasDePrimerVerificador;
-	private Date fechaDeCreacion;
+	private LocalDate fechaDeCreacion;
 	
 	//Constructores
-	public Muestra(Verificacion verificacion,String unaFotografia, Ubicacion unaUbicacion, Date unaFechaDeCreacion) {
+	public Muestra(Verificacion verificacion,String unaFotografia, Ubicacion unaUbicacion) {
 		this.verificador = new VerificadorDeMuestra(verificacion);
+		
 		this.aliasDePrimerVerificador = verificacion.getAliasDeVerificador();
+		this.fechaDeCreacion = verificacion.getFechaDeCreacion();
+		
 		this.fotografia = unaFotografia;
 		this.ubicacion = unaUbicacion;
-		this.fechaDeCreacion = unaFechaDeCreacion;
 	}
 	//Geters
 	public NivelDeVerificacion getNivelDeVerificion() {
@@ -43,11 +46,11 @@ public class Muestra {
 	public Boolean tieneVerificacionDe(String alias) {
 		return this.verificador.tieneVerificacionDe(alias);
 	}	
-	public boolean tieneVerificacionEsteMesDe(String alias, Date fechaDeHoy){
+	public boolean tieneVerificacionEsteMesDe(String alias, LocalDate fechaDeHoy){
         return this.verificador.tieneVerificacionDe(alias) && this.esDeEsteMes(fechaDeHoy);
 	}
 	
-	public boolean esDeEsteMes(Date fechaDeHoy){
+	public boolean esDeEsteMes(LocalDate fechaDeHoy){
         return this.getFechaDeCreacion().getMonth() == fechaDeHoy.getMonth() && this.getFechaDeCreacion().getYear() == fechaDeHoy.getYear();
 	}
 	
@@ -65,8 +68,11 @@ public class Muestra {
 	public Set<Usuario> getUsuarios() {
 		return this.verificador.getVerificadores();
 	}
-	public Date getFechaDeCreacion(){
+	public LocalDate getFechaDeCreacion(){
         return this.fechaDeCreacion;
 	}
-
+	public Boolean esDeUsuarioYDelMes(String alias, LocalDate fecha) {
+		
+		return this.esDeUsuario(alias) && this.esDeEsteMes(fecha);
+	}
 }

@@ -7,9 +7,9 @@ public class ImagenPocoClara extends TipoDeMuestra {
 	@Override
 	public boolean hacerseCargo(List<Verificacion> verificaciones) {
 	
-		return this.todosVerificanron("ImagenPocoClara", verificaciones) || (
+		return this.todosVerificaron("ImagenPocoClara", verificaciones) || (
 				   this.usuarioDeMayorNivelObservo("ImagenPocoClara", verificaciones) &&
-				   this.noHayDosUsuariosDeAltoNivelQueDiscrepan("ImagenPocoClara" , verificaciones));
+				   this.noHayDosUsuariosDeAltoNivelQueDiscrepan(verificaciones));
 	}
 	@Override
 	public String decirTipo() {

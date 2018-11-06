@@ -9,11 +9,10 @@ public class PhtiaChinche extends TipoDeMuestra {
 	@Override
 	public boolean hacerseCargo(List<Verificacion> verificaciones) {
 		
-		return this.todosVerificanron("PhtiaChinche", verificaciones) || (
+		return this.todosVerificaron("PhtiaChinche", verificaciones) || (
 			   this.usuarioDeMayorNivelObservo("PhtiaChinche", verificaciones) &&
-			   this.noHayDosUsuariosDeAltoNivelQueDiscrepan("PhtiaChinche" , verificaciones));
+			   this.noHayDosUsuariosDeAltoNivelQueDiscrepan(verificaciones));
 	}
-
 	@Override
 	public String decirTipo() {
 		return "PhtiaChince";

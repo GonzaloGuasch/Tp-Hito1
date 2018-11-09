@@ -10,6 +10,7 @@ public class Indeterminada extends TipoDeMuestra {
 	public boolean hacerseCargo(List<Verificacion> verificaciones) {
 		return this.observacionesDiferentes(verificaciones) == 3 || !this.noHayDosUsuariosDeAltoNivelQueDiscrepan(verificaciones); 	}
 
+	
 	private int observacionesDiferentes(List<Verificacion> verificaciones) {
 		ArrayList<String> observacionesDiferentes = new ArrayList<String>();
 		for(Verificacion ver : verificaciones) {

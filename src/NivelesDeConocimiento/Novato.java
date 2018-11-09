@@ -2,19 +2,19 @@ package NivelesDeConocimiento;
 
 import Aplicacion.AplicacionVinchuca;
 import Usuarios.Usuario;
-import NivelesDeVerificacion.Bajo;
 
 public class Novato extends NivelDeConocimiento {
-
-	public Novato() {
+	
+	private NivelDeConocimiento nivelDeConocimientoDeCambio;
+	public Novato(NivelDeConocimiento nivelDeCambio) {
 		this.rankingDeConocimiento = 0;
-		this.nivelDeVerificacion = new Bajo();
+		this.nivelDeConocimientoDeCambio = nivelDeCambio;
 	}
 	@Override
-	public void resolverEstado(Usuario usuario, AplicacionVinchuca app) {
-		if(usuario.cantidadDeMuestrasEnviadasEsteMesEn(app) >= 20 
-		   && usuario.cantidadDeMuestrasVerificadas(app) >= 10) {
-			usuario.setNivelDeConocimiento(new Experto());
+	public void resolverEstadoPara(Usuario usuario, AplicacionVinchuca app) {
+		if(app.cantidadDeMuestrasEnviadasEsteMesDe(usuario) > 20 
+		   && app.cantidadDeMuestrasVerificadasEsteMesDe(usuario) > 10) {
+			usuario.setNivelDeConocimiento(nivelDeConocimientoDeCambio);
 		}
 		
 	}

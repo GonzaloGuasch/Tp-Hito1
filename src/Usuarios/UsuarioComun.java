@@ -1,16 +1,16 @@
 package Usuarios;
 
 import Aplicacion.AplicacionVinchuca;
-import NivelesDeConocimiento.Novato;
+import NivelesDeConocimiento.NivelDeConocimiento;
 
 public class UsuarioComun extends Usuario {
 
-	public UsuarioComun(String alias) {
+	public UsuarioComun(String alias,NivelDeConocimiento nivelDeInicializacion) {
 		super(alias);
-		this.nivelDeConocimiento = new Novato();
+		this.nivelDeConocimiento = nivelDeInicializacion;
 	}
 	protected void chequearEstado(Usuario usuario, AplicacionVinchuca app) {
-		usuario.nivelDeConocimiento.resolverEstado(this, app);
+		usuario.nivelDeConocimiento.resolverEstadoPara(this, app);
 	}
 
 }

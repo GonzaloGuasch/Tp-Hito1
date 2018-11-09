@@ -1,47 +1,33 @@
 package NivelesDeVerificacion;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import Muestra.Muestra;
 import Usuarios.Usuario;
 
 public class Alta extends NivelDeVerificacion {
 
-
+	//booleanos
 	@Override
 	public boolean hacerseCargo(Muestra muestra) {
 		return this.esMuestraAlta(muestra);
 	}
-
-	@Override
-	public void cambiarEstado(Muestra muestra) {	
+	private boolean esMuestraAlta(Muestra muestra) {
 		
-		muestra.cambiarVerificacion(new Alta());
+		return muestra.cantidadDeVerificaciones() == 3 || this.esVerificadorEspecialista(muestra) || this.verificaronDosUsuariosExpertos(muestra);
+	 }
+	//booleanos privados
+	private boolean verificaronDosUsuariosExpertos(Muestra muestra) {
+		
+		return muestra.getUsuarios().stream().filter(usuario -> usuario.getTipoDeConocimiento() == "Experto")
+			.collect(Collectors.toList()).size() ==2;
 	}
-	
-	public boolean esMuestraAlta(Muestra muestra) {
+	private boolean esVerificadorEspecialista(Muestra muestra) {
 		
-		
-		return muestra.cantidadDeVerificaciones() == 3 || this.hayUsuarioConNivelAltoEn(muestra) || 
-				this.hayDosUsuariosExpertos(muestra);
-	}
-	
-	private boolean hayDosUsuariosExpertos(Muestra muestra) {
-		List<Usuario> usuariosExpertos = new ArrayList<Usuario>();
+		boolean res = false; 
 		for(Usuario usuario : muestra.getUsuarios()) {
-			if(usuario.getNivelDeConocimiento().valor() >= 1) {
-				usuariosExpertos.add(usuario);
-			}
+			res = res || usuario.getTipoDeConocimiento() == "Especialista";
 		}
-		return usuariosExpertos.size() == 2;
-	}
-
-	public boolean hayUsuarioConNivelAltoEn(Muestra muestra) {
-	 boolean res = false; 
-	 	for(Usuario usuario : muestra.getUsuarios()) {
-		 res = res || usuario.getTipoDeConocimiento() == "Especialista";
-	 	}
-	return res;
+		return res;
 	}
 }

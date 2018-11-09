@@ -3,7 +3,6 @@ package Muestra;
 import Usuarios.Usuario;
 
 import java.time.LocalDate;
-import NivelesDeVerificacion.NivelDeVerificacion;
 
 public class Verificacion {
 	
@@ -22,11 +21,8 @@ public class Verificacion {
 		public String getObservacionDeVerificador() {
 			return this.observacionDeUsuario;
 		}
-		public NivelDeVerificacion getNivelDeVerificacionInicial() {
-			return this.usuarioVerificador.getNivelDeVerificacionInicial();
-		}
-		public boolean noEsVerificacionDe(String alias) {
-			return usuarioVerificador.getAlias() != alias;
+		public boolean esVerificacionDe(String alias) {
+			return usuarioVerificador.getAlias() == alias;
 		}
 		public Usuario getVerificador() {
 			return this.usuarioVerificador;

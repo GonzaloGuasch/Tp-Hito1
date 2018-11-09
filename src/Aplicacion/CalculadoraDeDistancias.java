@@ -22,9 +22,8 @@ public class CalculadoraDeDistancias {
    
         return Math.ceil(distancia);
 	}
-	
 	public Set<Ubicacion> ubicacionesAMenosDeXKilometrosDeUnaUbicacion(Set<Ubicacion> ubicaciones, Ubicacion ubicacionreferencia, Double distancia){
-		
+	//No le supimos dar uso a este Mensaje: (lo implementamos por que lo pedian)
 		Stream<Ubicacion> ubicacionesAOperar= ubicaciones.stream();
 		
 		ubicacionesAOperar = ubicacionesAOperar.filter(ubicacion -> !(ubicacion.equals(ubicacionreferencia)));
@@ -33,11 +32,9 @@ public class CalculadoraDeDistancias {
 		return ubicacionesAOperar.collect(Collectors.toSet());
 	}
 	
-	public Set<Muestra> MuestrasAMenosDeXKilometros(Set<Muestra> muestras, Muestra muestraDeReferencia , Double distancia){
+	public Set<Muestra> MuestrasAMenosDeXKilometros(Set<Muestra> muestras, Ubicacion unaUbicacion , Double distancia){ 
 		
-		Ubicacion ubicacionReferencia =muestraDeReferencia.getUbicacion(); 
-		
-		return muestras.stream().filter(muestra -> this.distanciaEntre(muestra.getUbicacion(), ubicacionReferencia) < distancia)
+		return muestras.stream().filter(muestra -> this.distanciaEntre(muestra.getUbicacion(), unaUbicacion) < distancia)
 				.collect(Collectors.toSet());
 		}
 }

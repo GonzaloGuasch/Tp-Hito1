@@ -13,7 +13,7 @@ public class Bajo extends NivelDeVerificacion {
 	private boolean esMuestraBaja(Muestra muestra) {
 		return muestra.cantidadDeVerificaciones() == 1 && this.esVerificadorBajo(muestra);
 	}
-
+	//booleanos privados
 	private boolean esVerificadorBajo(Muestra muestra) {
 	boolean res = false;
 	    for(Usuario u : muestra.getUsuarios()) {
@@ -21,9 +21,4 @@ public class Bajo extends NivelDeVerificacion {
 	    }
 		return res;
 	}
-
-	@Override
-	public void cambiarEstado(Muestra muestra) {
-	}
-
 }

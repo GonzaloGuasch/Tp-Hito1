@@ -2,18 +2,16 @@ package AplicacionTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import Aplicacion.CalculadoraDeDistancias;
 import Aplicacion.Ubicacion;
 import Muestra.Muestra;
-import Muestra.Verificacion;
-import Usuarios.Usuario;
-import Usuarios.UsuarioComun;
 
 class CalculadoraDeDistanciasTest {
 	
@@ -59,28 +57,25 @@ class CalculadoraDeDistanciasTest {
 
 		assertEquals(1,unaCalculadora.ubicacionesAMenosDeXKilometrosDeUnaUbicacion(ubicaciones, ubicacionReferencia, 2144d).size());
 	}
+	
 	@Test
 	void testUnaCalculadoraDeDistanciasPuedecalcularLasMuestrasAMenosDeXKilometrosDeUnPunto() {
-	Usuario usuario1 = new UsuarioComun("gonza");
-	Usuario usuario2 = new UsuarioComun("gonzaMolina");
-	Usuario usuario3 = new UsuarioComun("fran");
-	Usuario usuarioReferencia = new UsuarioComun("diego");
+	
+		Muestra muestraMock1= Mockito.mock(Muestra.class);
+		Muestra muestraMock2= Mockito.mock(Muestra.class);
+		Muestra muestraMock3= Mockito.mock(Muestra.class);
+		Muestra muestraMockReferencia= Mockito.mock(Muestra.class);
 
-	Verificacion verificacion1 = new Verificacion(usuario1, "una Observacion1");
-	Verificacion verificacion2 = new Verificacion(usuario2, "una Observacion2");
-	Verificacion verificacion3 = new Verificacion(usuario3, "una Observacion3");
-	Verificacion verificacionReferencia = new Verificacion(usuarioReferencia, "una ObservacionReferencia");
-	//ERROR: hasta no tener las fechas, no va a compilar
-	Muestra muestra1 = new Muestra(verificacion1, "gonza",ubicacion1);
-	Muestra muestra2 = new Muestra(verificacion2, "gonzaMolina", ubicacion2);
-	Muestra muestra3 = new Muestra(verificacion3, "fran", ubicacion3);
-	Muestra muestraReferencia = new Muestra(verificacionReferencia, "diego", ubicacionReferencia);
-	
+		Mockito.when(muestraMock1.getUbicacion()).thenReturn(ubicacion1);
+		Mockito.when(muestraMock2.getUbicacion()).thenReturn(ubicacion2);
+		Mockito.when(muestraMock3.getUbicacion()).thenReturn(ubicacion3);
+		Mockito.when(muestraMockReferencia.getUbicacion()).thenReturn(ubicacionReferencia);
+
 	Set<Muestra>muestras = new HashSet<Muestra>();
-	muestras.add(muestra1);
-	muestras.add(muestra2);
-	muestras.add(muestra3);
+	muestras.add(muestraMock1);
+	muestras.add(muestraMock2);
+	muestras.add(muestraMock3);
 	
-	assertEquals(1,unaCalculadora.MuestrasAMenosDeXKilometros(muestras, muestraReferencia, 2144d).size());
+	assertEquals(1,unaCalculadora.MuestrasAMenosDeXKilometros(muestras, muestraMockReferencia.getUbicacion(), 2144d).size());
 	}
 }

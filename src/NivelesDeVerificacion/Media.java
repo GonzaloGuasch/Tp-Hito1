@@ -1,10 +1,7 @@
 package NivelesDeVerificacion;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.stream.Collectors;
 import Muestra.Muestra;
-import Usuarios.Usuario;
 
 public class Media extends NivelDeVerificacion {
 
@@ -14,21 +11,25 @@ public class Media extends NivelDeVerificacion {
 		return this.esMuestraMedia(muestra);
 	}
 	private boolean esMuestraMedia(Muestra muestra) {
-		return muestra.cantidadDeVerificaciones() == 2 && this.hayDosNovatos(muestra);
+		return this.verificaron2Novatos(muestra) || this.verifico1Experto(muestra);
 	}
 
+	//booleans privados
+	private boolean verifico1Experto(Muestra muestra) {
+		return (muestra.cantidadDeVerificaciones() == 1 && this.esVerificadorMedio(muestra));
+	}
+	private boolean verificaron2Novatos(Muestra muestra) {
+		return (muestra.cantidadDeVerificaciones() == 2 && this.hayDosNovatos(muestra));
+	}
+	
 	private boolean hayDosNovatos(Muestra muestra) {
-		List<Usuario> usuariosExpertos = new ArrayList<Usuario>();
-		for(Usuario usuario : muestra.getUsuarios()) {
-			if(usuario.getNivelDeConocimiento().valor() < 1) {
-				usuariosExpertos.add(usuario);
-			}
-		}
-		return usuariosExpertos.size() == 2;
+		
+		return muestra.getUsuarios().stream().filter(usuario -> usuario.getTipoDeConocimiento() == "Novato")
+				.collect(Collectors.toList()).size() == 2;
 	}
-
-	@Override
-	public void cambiarEstado(Muestra muestra) {
-		muestra.cambiarVerificacion(new Media());
+	private boolean esVerificadorMedio(Muestra muestra) {
+		
+		return muestra.getUsuarios().stream().filter(usuario -> usuario.getTipoDeConocimiento() == "Experto")
+			.collect(Collectors.toList()).size() == 1;
 	}
 }

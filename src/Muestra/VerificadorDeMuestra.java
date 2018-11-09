@@ -3,100 +3,71 @@ package Muestra;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import TipoDeMuestra.ChinceFoliada;
-import TipoDeMuestra.ImagenPocoClara;
-import TipoDeMuestra.Indeterminada;
-import TipoDeMuestra.PhtiaChinche;
 import TipoDeMuestra.TipoDeMuestra;
-import TipoDeMuestra.Vinchuca;
 import Usuarios.Usuario;
 import NivelesDeVerificacion.NivelDeVerificacion;
-import NivelesDeVerificacion.Alta;
-import NivelesDeVerificacion.Media;
-import NivelesDeVerificacion.Bajo;
 
 public class VerificadorDeMuestra {
 	
-	private NivelDeVerificacion nivelDeVerificacionDeMuestra;
-	private List<Verificacion> verificaciones = new ArrayList<Verificacion>();
-	private Collection<NivelDeVerificacion> estadosPosibles = new ArrayList<NivelDeVerificacion>();
-	private Collection<TipoDeMuestra> tiposPosibles = new ArrayList<TipoDeMuestra>();
+	private ArrayList<Verificacion> verificaciones;
+	private Collection<NivelDeVerificacion> estadosPosibles;
+	private Collection<TipoDeMuestra> tiposPosibles;
 	
 	//Constructor
-	public VerificadorDeMuestra(Verificacion nuevaVerificacion){
-		this.nivelDeVerificacionDeMuestra = nuevaVerificacion.getNivelDeVerificacionInicial();
-		this.verificaciones.add(nuevaVerificacion);
+	public VerificadorDeMuestra(Collection<NivelDeVerificacion>nivelesDeVerificacionPosible,
+				Collection<TipoDeMuestra>tiposPosibles){
+		this.verificaciones = new ArrayList<Verificacion>();
 		
-		NivelDeVerificacion alta   = new Alta();
-		NivelDeVerificacion media = new Media ();
-		NivelDeVerificacion bajo   = new Bajo();
-		
-		this.estadosPosibles.add(alta);
-		this.estadosPosibles.add(media);
-		this.estadosPosibles.add(bajo);
-		
-		TipoDeMuestra vinchuca 			= new Vinchuca();
-		TipoDeMuestra Pchinche 			= new PhtiaChinche();
-		TipoDeMuestra chince 			= new ChinceFoliada();
-		TipoDeMuestra imagenPocoClara 	= new ImagenPocoClara();
-		TipoDeMuestra indeterminada 	= new Indeterminada();
-		
-		this.tiposPosibles.add(vinchuca);
-		this.tiposPosibles.add(chince);
-		this.tiposPosibles.add(imagenPocoClara);
-		this.tiposPosibles.add(indeterminada);
-		this.tiposPosibles.add(Pchinche);
+		this.tiposPosibles = tiposPosibles;
+		this.estadosPosibles = nivelesDeVerificacionPosible;
 	}
 	//Getters
-	public NivelDeVerificacion getNivelDeVerificacion() {
-		return this.nivelDeVerificacionDeMuestra;
+	public String getTipoDeMuestra() {		 
+		return tiposPosibles.stream().filter(unTipoDeMuestra -> unTipoDeMuestra.hacerseCargo(this.verificaciones))
+		.findFirst().get().decirTipo();
 	}
-	//Acciones
-	public void nuevoEstado(NivelDeVerificacion nuevoNivel) {
-		this.nivelDeVerificacionDeMuestra = nuevoNivel;
-	}
-	
-	
-	//Booleanos
-	
-	public boolean puedeVerificar(String usuario) {
-		boolean respuesta = false;
-		for(Verificacion unaVerificacion :verificaciones) {
-			respuesta = respuesta || unaVerificacion.noEsVerificacionDe(usuario);
-		}
-		return respuesta;
-	}
-	public Boolean tieneVerificacionDe(String alias) {
-		return verificaciones.stream().filter(verificacion -> verificacion.getAliasDeVerificador() == alias)
-				.collect(Collectors.toList()).size() > 0;
-	}
-	public void chequearNivelDeVerificacion(Muestra muestra) {
-			
-	estadosPosibles.stream().filter(unEstadoPosible -> unEstadoPosible.hacerseCargo(muestra))
-	.findFirst().get().cambiarEstado(muestra);
+	public NivelDeVerificacion getNivelDeVerificacion(Muestra unaMuestra) {
 		
+		return estadosPosibles.stream().filter(unEstadoPosible -> unEstadoPosible.hacerseCargo(unaMuestra))
+		.findFirst().get();	
 	}
-	public Integer getCantidadDeVerificaciones() {
-		return this.verificaciones.size();
+	public Verificacion getVerificacionDe(Usuario unUsuario) {
+		
+		return verificaciones.stream().filter(verificacion->verificacion.esVerificacionDe(unUsuario.getAlias()))
+				.collect(Collectors.toList()).get(0);
 	}
-	public void agregarVerificacion(Verificacion verificacion) {
-		this.verificaciones.add(verificacion);
-	}
-	public Set<Usuario> getVerificadores() {
+	public Set<Usuario> getUsuariosVerificadores() {
 		Set<Usuario> verificadores = new HashSet<Usuario>();
 		for(Verificacion v : verificaciones) {
 			verificadores.add(v.getVerificador());
 		}
 		return verificadores;
 	}
-	public String getTipoDeMuestra() {
-	 
-		return tiposPosibles.stream().filter(unTipoDeMuestra -> unTipoDeMuestra.hacerseCargo(this.verificaciones))
-		.findFirst().get().decirTipo();
+	public Integer getCantidadDeVerificaciones() {
+		return this.verificaciones.size();
+	}
+	//este getter lo hice solo para poder testear el msj gettipodemuestra(), (para mockear los tipos necesitaba las verificaciones)
+	public ArrayList<Verificacion> getVerificaciones(){
+		return verificaciones;
+	}
+	//Acciones
+	public void agregarVerificacion(Verificacion verificacion) {
+		this.verificaciones.add(verificacion);
+	}
+	//Booleanos
+	
+	public boolean puedeVerificar(String usuario) {
+		
+		return verificaciones.stream().filter(verificacion -> verificacion.esVerificacionDe(usuario))
+				.collect(Collectors.toList()).size() == 0;
+	}
+	
+	public Boolean tieneVerificacionDe(String alias) {
+		return verificaciones.stream().filter(verificacion -> verificacion.getAliasDeVerificador() == alias)
+				.collect(Collectors.toList()).size() > 0;
 	}
 	
 }

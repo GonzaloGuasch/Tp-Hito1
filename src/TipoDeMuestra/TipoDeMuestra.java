@@ -4,19 +4,23 @@ import Muestra.Verificacion;
 import Usuarios.Usuario;
 
 public abstract class TipoDeMuestra {
-	
+	public abstract boolean hacerseCargo(List<Verificacion> verificaciones);
 	public abstract String decirTipo();
-	public boolean todosVerificaron(String observacion,List<Verificacion> verificaciones) {
-	boolean res = true;
-		for(Verificacion ver : verificaciones) {
-			res = res && ver.getObservacionDeVerificador() == observacion;
+	
+	//booleans
+	protected boolean todosVerificaron(String observacion,List<Verificacion> verificaciones) {
+	
+		boolean respuesta = true;
+		for(Verificacion verificacion : verificaciones) {
+			respuesta = respuesta && verificacion.getObservacionDeVerificador() == observacion;
 		}
-		return res;
+		return respuesta;
 	}
-	public boolean usuarioDeMayorNivelObservo(String observacion,List<Verificacion> verificaciones) {
+	protected boolean usuarioDeMayorNivelObservo(String observacion,List<Verificacion> verificaciones) {
 	 Usuario usuarioconMayorNivel = verificaciones.get(0).getVerificador();
 	 Verificacion verificacionDeUsuario = verificaciones.get(0);
-	   for(Verificacion ver : verificaciones) {
+	  
+	 for(Verificacion ver : verificaciones) {
 		if(ver.getVerificador().getNivelDeConocimiento().valor() > usuarioconMayorNivel.getNivelDeConocimiento().valor()) {
 			usuarioconMayorNivel = ver.getVerificador();
 			verificacionDeUsuario = ver;
@@ -24,7 +28,8 @@ public abstract class TipoDeMuestra {
 	   }
 	return verificacionDeUsuario.getObservacionDeVerificador() == observacion;
 	}
-	public boolean noHayDosUsuariosDeAltoNivelQueDiscrepan(List<Verificacion> verificaciones) {
+	
+	protected boolean noHayDosUsuariosDeAltoNivelQueDiscrepan(List<Verificacion> verificaciones) {
 		Boolean respuesta=true;
 		
 		if(verificaciones.size()>=2){
@@ -37,6 +42,7 @@ public abstract class TipoDeMuestra {
 		}	
 		return respuesta;
 	}
+	//getters
 	private Verificacion verificacionConUsuarioDeMayorConocimiento(List<Verificacion> verificaciones) {
 		
 		Verificacion verificacionAEntregar = verificaciones.get(0);
@@ -48,7 +54,4 @@ public abstract class TipoDeMuestra {
 		}
 		return verificacionAEntregar; 
 	}
-	public abstract boolean hacerseCargo(List<Verificacion> verificaciones);
-
-	
 }

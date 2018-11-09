@@ -3,7 +3,6 @@ package Usuarios;
 import Aplicacion.AplicacionVinchuca;
 import Muestra.Muestra;
 import Muestra.Verificacion;
-import NivelesDeVerificacion.NivelDeVerificacion;
 import NivelesDeConocimiento.NivelDeConocimiento;
 
 public abstract class Usuario {
@@ -14,38 +13,24 @@ public abstract class Usuario {
 	public Usuario(String alias) {
 		this.identificacion = alias;
 	}
-	//Cantidad de Muestras enviadas y verificadas en una app
-	public Integer cantidadDeMuestrasEnviadas(AplicacionVinchuca app) {
-		return app.muestrasEnviadasDe(this);
-	}
-	public Integer cantidadDeMuestrasVerificadas(AplicacionVinchuca app) {
-		return  app.verificacionesDe(this);
-	}
-	public Integer cantidadDeMuestrasEnviadasEsteMesEn(AplicacionVinchuca app) {
-        return app.muestrasEnviadasEsteMesDe(this);
-    }
-	
-	//get alias del usuario y nivel de verificacion 
+	//getters
 	public String getAlias() {
 		return this.identificacion;
 	}
-	public NivelDeVerificacion getNivelDeVerificacionInicial() {
-		return nivelDeConocimiento.getNivelDeVerificacionInicial();
+	public NivelDeConocimiento getNivelDeConocimiento() {
+		return nivelDeConocimiento;
 	}
-	
+	public String getTipoDeConocimiento() {
+		return nivelDeConocimiento.getTipo();
+	}
 	//Acciones del usuario
 	
 	//Envio de muestra
 	public void enviarMuestra(Muestra nuevaMuestra, AplicacionVinchuca app) {
-		this.enviarMuestraAlaAplicacion(nuevaMuestra, app);
+		app.recibirMuestra(nuevaMuestra);
 		this.chequearEstado(this, app);
 	}
-	
-	private void enviarMuestraAlaAplicacion(Muestra nuevaMuestra, AplicacionVinchuca app) {
-		app.recibirMuestra(nuevaMuestra);
-		
-	}
-	//es abstract poque el especialista lo re-define vacio, "templateMethod"
+	//es abstract porque el especialista lo re-define vacio, "templateMethod"
 	protected abstract void chequearEstado(Usuario usuario, AplicacionVinchuca app);
 	
 	//Verificacion de muestra
@@ -60,13 +45,5 @@ public abstract class Usuario {
 	
 	public void setNivelDeConocimiento(NivelDeConocimiento nuevoNivel) {
 		this.nivelDeConocimiento = nuevoNivel;
-	}
-	public NivelDeConocimiento getNivelDeConocimiento() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public String getTipoDeConocimiento() {
-		return nivelDeConocimiento.getTipo();
-	}
-
+	} 
 }

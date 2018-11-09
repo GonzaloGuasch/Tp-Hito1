@@ -10,13 +10,14 @@ public class UsuarioEspecialista extends Usuario {
 		super(alias);
 		this.tituloEnVinchucas = tituloDeConocimiento;
 	}
+	//getters
 	public String getCertificado(){
 		return this.tituloEnVinchucas;
 	}
-
+	//acciones
 	@Override
 	protected void chequearEstado(Usuario usuario, AplicacionVinchuca app) {
-		//No realiza ninguna accion, porque el especialista no necesita chequer su estado
+		//No realiza ninguna accion, porque el especialista no necesita chequear su estado
 
 	}
 }

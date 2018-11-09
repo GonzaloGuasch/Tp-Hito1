@@ -2,22 +2,13 @@ package NivelesDeConocimiento;
 
 import Aplicacion.AplicacionVinchuca;
 import Usuarios.Usuario;
-import NivelesDeVerificacion.NivelDeVerificacion;
 
 public abstract class NivelDeConocimiento {
-	protected Integer rankingDeConocimiento;
-	protected NivelDeVerificacion nivelDeVerificacion;
+	protected Integer rankingDeConocimiento;	
 	
+	public abstract void resolverEstadoPara(Usuario usuario, AplicacionVinchuca app);
 	
-	public Integer getRanking() {
-		return this.rankingDeConocimiento;
-	}
-	public NivelDeVerificacion getNivelDeVerificacionInicial() {
-		return this.nivelDeVerificacion;
-	}
-	public abstract void resolverEstado(Usuario usuario, AplicacionVinchuca app);
-	
-	public int valor() {
+	public Integer valor() {
 		return this.rankingDeConocimiento;
 	}
 	public abstract String getTipo();

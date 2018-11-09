@@ -2,29 +2,55 @@ package MuestraTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.*;
 
 import Muestra.Verificacion;
 import Usuarios.Usuario;
-import Usuarios.UsuarioComun;
 
 
 class VerificacionTest {
-	Usuario usuario1; 
-	Verificacion verificacion1;
 	
+	@Mock Usuario usuarioMock;
+	private Verificacion unaVerificacion;
+	private LocalDate fechaDeHoy;
 	@BeforeEach
-	
-	void setUp() {
-		usuario1 = new UsuarioComun("usuario1");
-		verificacion1 = new Verificacion(usuario1, "vinchuca");
+	void setUp() {	
+		MockitoAnnotations.initMocks(this);
+		
+		fechaDeHoy = LocalDate.now();
+		unaVerificacion = new Verificacion(usuarioMock, "unString", fechaDeHoy);
 	}
 	@Test
-	void unaVerificacionTieneUnAliasYObservacion() {	
-		assertEquals("usuario1" , verificacion1.getAliasDeVerificador());
-		assertEquals("vinchuca" , verificacion1.getObservacionDeVerificador());
+	public void testunaVerificacionPuedeDarElAliasDeSuVerificador() {
 		
+		Mockito.when(usuarioMock.getAlias()).thenReturn("miAlias");
+		
+		assertEquals("miAlias", unaVerificacion.getAliasDeVerificador());
 	}
-
+	@Test
+	public void testUnaVerificacionPuedeDarLaObservacionDelVerificador() {
+		
+		assertEquals("unString",unaVerificacion.getObservacionDeVerificador());
+	}
+	@Test
+	public void testUnaVerificacionSabeDecirSiEsDeUnUsuario() {
+		
+		Mockito.when(usuarioMock.getAlias()).thenReturn("miAlias");
+		
+		assertTrue(unaVerificacion.esVerificacionDe("miAlias"));
+	}
+	@Test
+	public void testUnaVerificacionPuedeRetornarSuUsuario() {
+		
+		assertEquals(usuarioMock,unaVerificacion.getVerificador());
+	}
+	@Test
+	public void testunaVerificacionPuedeDarSuFechaDeCreacion() {
+		
+		assertEquals(fechaDeHoy,unaVerificacion.getFechaDeCreacion());
+	}
 }
